@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { firestore } from "../firebase";
+import { useFormInput } from "../hooks";
 
 const CreatePost = () => {
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
-  const [content, setContent] = useState("");
+  const title = useFormInput("");
+  const subtitle = useFormInput("");
+  const content = useFormInput("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Title : ", title);
-    console.log("Brief : ", subtitle);
-    console.log("Content : ", content);
+    // console.log("Title : ", title);
+    // console.log("Brief : ", subtitle);
+    // console.log("Content : ", content);
 
     firestore.collection("posts").add({
-      title: title,
-      subtitle: subtitle,
-      content: content,
+      title: title.value,
+      subtitle: subtitle.value,
+      content: content.value,
       createdAt: new Date(),
     });
   };
@@ -26,33 +27,16 @@ const CreatePost = () => {
       <form onSubmit={handleSubmit} className="create-post-form">
         <div className="form-field">
           <label>Title</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+          {/* using spread operator to extract the value and onChange function from object returned by our own custom hook */}
+          <input type="text" {...title} />
         </div>
         <div className="form-field">
           <label>Brief</label>
-          <input
-            type="text"
-            value={subtitle}
-            onChange={(e) => {
-              setSubtitle(e.target.value);
-            }}
-          />
+          <input type="text" {...subtitle} />
         </div>
         <div className="form-field">
           <label>Content</label>
-          <textarea
-            type="text"
-            value={content}
-            onChange={(e) => {
-              setContent(e.target.value);
-            }}
-          ></textarea>
+          <textarea type="text" {...content}></textarea>
         </div>
         <button type="submit" className="create-post-btn">
           Create Post
