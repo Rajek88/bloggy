@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router";
 import { firestore } from "../firebase";
 import { useFormInput } from "../hooks";
 
@@ -6,6 +7,9 @@ const CreatePost = () => {
   const title = useFormInput("");
   const subtitle = useFormInput("");
   const content = useFormInput("");
+  const [redir, setRedir] = useState({
+    redirect: false,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,10 +23,16 @@ const CreatePost = () => {
       content: content.value,
       createdAt: new Date(),
     });
+
+    setRedir({
+      redirect: true,
+    });
   };
 
   return (
     <div className="create-post">
+      {/* after submission of form set redir as true nad redirect to home page */}
+      {redir.redirect ? <Redirect push to="/" /> : null}
       <h1>Create Post</h1>
       <form onSubmit={handleSubmit} className="create-post-form">
         <div className="form-field">
