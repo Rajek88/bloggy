@@ -23,8 +23,8 @@ const Home = () => {
   }, []);
   return (
     <div className="home">
-      <h1>Tech blog</h1>
-      <div id="blog-by">Author : Rajendra</div>
+      <h1>Blog</h1>
+      {/* <div id="blog-by">Author : Rajendra</div> */}
       {posts.map((post, index) => (
         <div className="post" key={`post-${index}`}>
           <Link to={`/posts/${post.id}`}>
