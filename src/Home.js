@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { firestore } from "./firebase";
+// import styled from "styled-components";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
